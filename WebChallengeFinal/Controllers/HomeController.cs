@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jint;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,18 +14,13 @@ namespace WebChallengeFinal.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public void Test()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            string code = @"var xmlHttp = new XMLHttpRequest();
+                            xmlHttp.open( 'GET', 'http://localhost:53715/Home/Test', false ); // false for synchronous request
+                            xmlHttp.send(null); ";
+            var jintEngine = new Engine();
+            jintEngine.Execute(code);
         }
     }
 }

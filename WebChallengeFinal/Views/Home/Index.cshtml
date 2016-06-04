@@ -1,32 +1,40 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Main";
 }
-
+<style>
+    textarea {
+        width:600px;
+        max-width:600px;
+        height: 400px;
+        font-size: 0.5em;
+        font-weight: bold;
+        font-family: Verdana, Arial, Helvetica, sans-serif;
+        border: 1px solid black;
+        margin-bottom:10px;
+    }
+    #priority {
+        font-size:0.8em;
+    }
+    p{
+        font-size:0.8em;
+    }
+</style>
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">Ua Web Challenge test</p>
-    <p class="lead">continuous integration test</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <p class="lead">Spase Тechnology 8 scheduler</p>
+    <p>Пріоритет (від 0 до 100)</p>
+    <p><input type="number" name="priority" id="priority" min="0" max="100"></p>
+    <p>JavaScript код</p>
+    <textarea id="editor"></textarea>
+    <p><a onclick="send()" class="btn btn-primary btn-lg">Додати на виконання</a></p>
 </div>
+<script>
+    function send() {
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+        $.ajax({
+            url: '@Url.Action("AddTask", "Scheduler")' + '?code=' + encodeURIComponent($("#editor")[0].value) + '&priority=' + $("#priority")[0].value,
+            success: function (data) {
+                $('#container').html(data);
+            }
+        });
+    }
+</script>
