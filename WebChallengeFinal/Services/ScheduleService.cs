@@ -23,12 +23,10 @@ namespace WebChallengeFinal.Services
                 {
                     Queue.ToList().Where(t => t.Status != EScheduleTaskStatus.Finished).ToList().OrderBy(t => t.Priority)
                     .ToList().ForEach(task =>
-                    {
-                        System.Diagnostics.Debug.WriteLine("Started task with code:" + task.Code);
+                    {                        
                         task.Run();
                         Thread.Sleep(time * task.Priority);
-                        task.Suspend();
-                        System.Diagnostics.Debug.WriteLine("Stopped task with code:" + task.Code);
+                        task.Suspend();                     
                     });
                 }
             });

@@ -51,6 +51,7 @@ namespace WebChallengeFinal.Models
                     catch (Exception e)
                     {
                         System.Diagnostics.Debug.WriteLine(e.Message);
+                        Status = EScheduleTaskStatus.Failed;
                     }
                 });
 
@@ -68,8 +69,8 @@ namespace WebChallengeFinal.Models
         {
             if (!_executionThread.IsAlive)
             {
-                Status = EScheduleTaskStatus.Finished;
-                System.Diagnostics.Debug.WriteLine("Finished task with code:" + Code);
+                if(Status != EScheduleTaskStatus.Failed)
+                    Status = EScheduleTaskStatus.Finished;
             }
 
             if (Status == EScheduleTaskStatus.Running)
@@ -85,6 +86,7 @@ namespace WebChallengeFinal.Models
         Ready,
         Running,
         Blocked,
-        Finished        
+        Finished,
+        Failed        
     }
 }

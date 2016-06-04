@@ -21,19 +21,31 @@
 </style>
 <div class="jumbotron">
     <p class="lead">Spase Тechnology 8 scheduler</p>
+    <div class="alert-danger" id="error" ></div>
+    <div class="alert-success" id="success"></div>
     <p>Пріоритет (від 0 до 100)</p>
     <p><input type="number" name="priority" id="priority" min="0" max="100"></p>
     <p>JavaScript код</p>
     <textarea id="editor"></textarea>
-    <p><a onclick="send()" class="btn btn-primary btn-lg">Додати на виконання</a> <a onclick="restart()" class="btn btn-danger btn-lg">Перезавантажити scheduler</a></p>
+    <p><a onclick="send()" class="btn btn-primary btn-lg">Додати на виконання</a></p>
 </div>
 <script>
     function send() {
-
+        $("#error").html("");
+        $("#success").html("");
         $.ajax({
             url: '@Url.Action("AddTask", "Scheduler")' + '?code=' + encodeURIComponent($("#editor")[0].value) + '&priority=' + $("#priority")[0].value,
             success: function (data) {
-                $('#container').html(data);
+                switch (data) {
+                    case "-1":
+                        $('#error').html('Заповніть поле "JavaScript код"');
+                        break;
+                    case "-3":
+                        $('#error').html('Введіть коректне значення пріоритету(від 0 до 100)');
+                        breal;
+                    case "0":
+                        $('#success').html('Завдання відправлено!');
+                }
             }
         });
     }

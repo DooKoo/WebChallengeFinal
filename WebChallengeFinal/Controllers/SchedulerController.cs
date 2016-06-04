@@ -15,9 +15,9 @@ namespace WebChallengeFinal.Controllers
     public class SchedulerController : Controller
     {
         private ScheduleService _scheduler = SchedulerSingelton.GetInstance(5);
-        public int AddTask(string code, int priority)
+        public int AddTask(string code="", int priority=0)
         {
-            if (priority < 0 && priority > 100)
+            if (priority < 0 || priority > 100)
                 return -3;
 
             if (code.Length == 0)
@@ -36,11 +36,6 @@ namespace WebChallengeFinal.Controllers
             return new JavaScriptSerializer().Serialize(queue.Select(i => new { Priority = i.Priority, Code = i.Code, Status = StatusToString(i.Status) }));
         }
 
-        public void Restart()
-        {
-            _scheduler.Restart();
-        }
-
         #region Util
         private string StatusToString(EScheduleTaskStatus status)
         {
@@ -55,7 +50,7 @@ namespace WebChallengeFinal.Controllers
                 case EScheduleTaskStatus.Running:
                     return "Виконується";
                 default:
-                    return "Щось не так :(";
+                    return "Щось пішло не так :(";
             }
         }
         #endregion
