@@ -22,5 +22,15 @@ namespace WebChallengeFinal.Controllers
             var jintEngine = new Engine();
             jintEngine.Execute(code);
         }
+
+        public ActionResult Table()
+        {
+            return View();
+        }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }

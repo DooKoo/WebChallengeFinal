@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Table";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<h2>View</h2>
+<table id="example" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>Priority</th>
+            <th>Code</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Priority</th>
+            <th>Code</th>
+            <th>Status</th>
+        </tr>
+    </tfoot>
+</table>
+<script>
+$(document).ready(function() {
+    $('#example').DataTable( {
+        "ajax": "@Url.Action("GetInfo", "Scheduler")",
+        "sAjaxDataProp" : "",
+        "bServerSide": true,
+        "aoColumns": [
+            { "mData": "Priority" },
+            { "mData": "Code" },
+            { "mData": "Status" }
+        ]
+    } );
+});
+</script>
+
